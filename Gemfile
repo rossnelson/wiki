@@ -4,6 +4,7 @@ gem 'rails', '3.2.1'
 
 gem 'mysql2'
 gem 'sorcery'
+gem 'carrierwave'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
