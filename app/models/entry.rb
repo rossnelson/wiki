@@ -55,6 +55,10 @@ class Entry
     end
   end
 
+  def destroy
+    File.delete(@path)
+  end
+
   def persisted?
     false
   end

@@ -1,6 +1,6 @@
 <div class="row">
-  <%- markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, :autolink => true, :space_after_headers => true) %>
-  <div class="span7 center">
+  <%- markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, :autolink => true, :space_after_headers => true, :fenced_code_blocks => true, :tables => true) %>
+  <div class="span6 center">
     <%= raw markdown.render @entry.content %>
   </div>
 </div>
@@ -8,6 +8,9 @@
 <div class="form-actions">
   <%= link_to "Edit", edit_entry_path(:id => @entry.file_name), :class => 'btn btn-primary' %>
   <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-    entry_path(:id => @entry.file_name), :class => 'btn' %>
+              entry_path(:id => @entry.file_name),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
 </div>
   

@@ -1,5 +1,7 @@
 class EntriesController < ApplicationController
 
+  before_filter :require_login
+
   def index
     @entries = Entry.all
   end
@@ -21,7 +23,6 @@ class EntriesController < ApplicationController
 
   def edit
     @entry = Entry.find_or_create_file params[:id]
-    
   end
 
   def update
@@ -32,7 +33,9 @@ class EntriesController < ApplicationController
   end
 
   def destroy
-    @entry = Entry.find_or_create_file
-    
+    @entry = Entry.find_or_create_file params[:id]
+    if @entry.destroy
+      redirect_to entries_path
+    end
   end
 end

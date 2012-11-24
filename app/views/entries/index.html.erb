@@ -1,3 +1,8 @@
+<%= form_tag "" do %>
+  <%= text_field_tag "entry_search", "", :placeholder => "Search Pages", :class => "search" %>
+<% end %>
+
+
 <% @entries.each do |entry| %>
 
   <div class="entry">
