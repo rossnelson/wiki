@@ -1,0 +1,23 @@
+<%= form_for @entry, :html => { :multipart => true } do |f| %>
+
+  <div class="row">
+
+    <div class="title span12">
+      <%= f.label :file_name %>
+      <%= f.text_field :file_name %>
+    </div>
+    <div class="content span7">
+      <%= f.label :content %>
+      <%= f.text_area :content %>
+    </div>
+
+    <div class="images"></div>
+    <div class="files"></div>
+
+  </div>
+  <div class="form-actions">
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                entries_path, :class => 'btn' %>
+  </div>
+<% end %>

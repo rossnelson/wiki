@@ -1,0 +1,13 @@
+<div class="row">
+  <%- markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, :autolink => true, :space_after_headers => true) %>
+  <div class="span7 center">
+    <%= raw markdown.render @entry.content %>
+  </div>
+</div>
+
+<div class="form-actions">
+  <%= link_to "Edit", edit_entry_path(:id => @entry.file_name), :class => 'btn btn-primary' %>
+  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+    entry_path(:id => @entry.file_name), :class => 'btn' %>
+</div>
+  

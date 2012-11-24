@@ -6,6 +6,8 @@ gem 'mysql2'
 gem 'sorcery'
 gem 'carrierwave'
 gem 'rmagick'
+gem 'redcarpet'
+gem "haml-rails"
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'

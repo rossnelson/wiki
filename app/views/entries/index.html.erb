@@ -1,0 +1,7 @@
+<% @entries.each do |entry| %>
+
+  <div class="entry">
+    <%= link_to entry.file_name, entry_path(:id => entry.file_name) %>
+  </div>
+
+<% end %>
