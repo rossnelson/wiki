@@ -5,6 +5,20 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="span6 center">
+    <% if @entry.yaml_data %>
+      <% if @entry.updated_by %>
+        Last updated by: <%= @entry.updated_by.username %>
+        <% if @entry.updated_at %>
+          <br />
+          on <%= @entry.updated_at.strftime('%c') %>.
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
 <div class="form-actions">
   <%= link_to "Edit", edit_entry_path(:id => @entry.file_name), :class => 'btn btn-primary' %>
   <%= link_to t('.destroy', :default => t("helpers.links.destroy")),

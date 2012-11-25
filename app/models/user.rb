@@ -9,4 +9,9 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email
   validates_presence_of :username
   validates_uniqueness_of :username
+
+  def meta_data
+    self.attributes.reject {|k,v| !["id","username"].include?(k)}
+  end
+
 end

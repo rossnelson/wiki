@@ -3,7 +3,7 @@ class Entry
   include ActiveModel::Conversion
   extend ActiveModel::Naming
 
-  attr_accessor :file_name, :content, :yaml, :images, :files
+  attr_accessor :file_name, :content, :yaml_data, :images, :files
 
   def initialize(options={})
 
@@ -13,11 +13,11 @@ class Entry
       @raw_content = find_or_create_file
 
       @content = parse_file[1]
-      @yaml = YAML.load parse_file[2]
+      @yaml_data = YAML.load parse_file[2]
     end
 
-    @content = options[:content] if options[:content] 
-    @yaml    = options[:yaml] if options[:yaml]
+    @content   = options[:content] if options[:content] 
+    @yaml_data = options[:yaml_data] if options[:yaml_data]
 
   end
 
@@ -30,9 +30,19 @@ class Entry
     Dir["*.markdown"].map{ |f| Entry.new :file_name => f.gsub(".markdown", "") }
   end
 
+  def updated_by
+    User.find @yaml_data[:user]["id"]
+  end
+
+  def updated_at
+    @yaml_data[:updated_at]
+  end
+
   def find_or_create_file
     file = File.open @path, File::RDWR|File::CREAT
-    file.read
+    content = file.read
+    file.close
+    content
   end
 
   def parse_file
@@ -44,7 +54,7 @@ class Entry
   end
 
   def concatenate_content
-    @content + "\n\n" + YAML.dump(@yaml)
+    @content + YAML.dump(@yaml_data)
   end
 
   def save

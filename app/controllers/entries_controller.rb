@@ -14,19 +14,16 @@ class EntriesController < ApplicationController
     @entry = Entry.new
   end
 
-  def create
-    @entry = Entry.new params[:entry]
-    if @entry.save
-      redirect_to entry_path :id => @entry.file_name
-    end
-  end
-
   def edit
     @entry = Entry.find_or_create_file params[:id]
   end
 
-  def update
-    @entry = Entry.find_or_create_file params[:id]
+  def create # and update
+    @entry = Entry.new params[:entry]
+
+    @yaml_data = MetaData.new(current_user)
+    @entry.yaml_data = @yaml_data.render
+
     if @entry.save
       redirect_to entry_path :id => @entry.file_name
     end
@@ -38,4 +35,5 @@ class EntriesController < ApplicationController
       redirect_to entries_path
     end
   end
+
 end
