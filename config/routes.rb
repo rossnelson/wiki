@@ -5,5 +5,5 @@ Kozak::Application.routes.draw do
   resources :users
   resources :sessions
   resources :entries
-  root :to => "users#index"
+  root :to => "entries#index"
 end
