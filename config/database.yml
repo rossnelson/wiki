@@ -1,7 +1,7 @@
 development:
   adapter: mysql2
   encoding: utf8
-  database: kozak
+  database: wiki
   username: root
   password:
 
@@ -9,7 +9,7 @@ test:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: kozak_test
+  database: wiki
   pool: 5
   username: root
   password:
@@ -19,7 +19,7 @@ production:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: kozak_production
+  database: wiki
   pool: 5
   username: root
   password:

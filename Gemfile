@@ -8,6 +8,7 @@ gem 'carrierwave'
 gem 'rmagick'
 gem 'redcarpet'
 gem "haml-rails"
+gem "capistrano"
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
