@@ -11,11 +11,11 @@ class MetaData
   end
 
   def serialize_assets
-    @entry.yaml_data[:assets].delete_if{ |id| @assets.include? id }
+    @entry.yaml_data[:assets].delete_if{ |id| @assets.include? id } if @entry.yaml_data
     @assets.select!{ |a| a.respond_to?("id") }
     @assets.map!{ |a| a.id }
 
-    @entry.yaml_data[:assets].concat(@assets).sort
+    @entry.yaml_data ? @entry.yaml_data[:assets].concat(@assets).sort : @assets
   end
 
   def render
