@@ -1,0 +1,7 @@
+<script id="asset-template" type="text/x-handlebars-template">
+  <div class="asset">
+    <%= file_field_tag "entry[assets][{{object_id}}][file]" %>
+    <br />
+    <%= check_box_tag "entry[assets][{{object_id}}][_destroy]" %> remove
+  </div>
+</script>

@@ -3,7 +3,7 @@ class Entry
   include ActiveModel::Conversion
   extend ActiveModel::Naming
 
-  attr_accessor :file_name, :content, :yaml_data, :images, :files
+  attr_accessor :file_name, :content, :yaml_data, :images, :files, :assets
 
   def initialize(options={})
 
@@ -17,7 +17,8 @@ class Entry
     end
 
     @content   = options[:content] if options[:content] 
-    @yaml_data = options[:yaml_data] if options[:yaml_data]
+    #@yaml_data = options[:yaml_data] if options[:yaml_data]
+    @assets    = deserialize_assets || []
 
   end
 
@@ -73,18 +74,11 @@ class Entry
     false
   end
 
-  # For Later
-  #
-  #def serialize_assets
-    #assets={}
-    #assets[:images] = images.map{|i| i.id}
-    #assets[:files]  = files.map{|f| f.id}
-    #assets.to_yaml
-  #end
-
-  #def deserialize_images
-    
-  #end
+  def deserialize_assets
+    if @yaml_data
+      @yaml_data[:assets] ? AssetBuilder.find(@yaml_data[:assets]) : false
+    end
+  end
 
 end
 

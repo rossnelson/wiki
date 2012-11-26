@@ -19,10 +19,8 @@ class EntriesController < ApplicationController
   end
 
   def create # and update
-    @entry = Entry.new params[:entry]
-
-    @yaml_data = MetaData.new(current_user)
-    @entry.yaml_data = @yaml_data.render
+    @builder = EntryBuilder.new :entry => params[:entry], :user => current_user
+    @entry   = @builder.render
 
     if @entry.save
       redirect_to entry_path :id => @entry.file_name

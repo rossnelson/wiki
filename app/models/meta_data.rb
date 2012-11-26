@@ -1,9 +1,9 @@
 class MetaData
 
-  def initialize(current_user, assets={})
+  def initialize(current_user, entry, assets)
     @user = current_user
-    #@entry = entry
-    @assets = assets
+    @entry = entry
+    @assets = assets || []
   end
 
   def user
@@ -11,15 +11,15 @@ class MetaData
   end
 
   def serialize_assets
-    {
-      "files"  => [{:id => 1, :filename => "wibble.jpg"}, {:id => 1, :filename => "wibble.jpg"}],
-      "assets" => [{:id => 1, :filename => "wibble.jpg"}, {:id => 1, :filename => "wibble.jpg"}]
-    }
+    @entry.yaml_data[:assets].delete_if{ |id| @assets.include? id }
+    @assets.select!{ |a| a.respond_to?("id") }
+    @assets.map!{ |a| a.id }
+
+    @entry.yaml_data[:assets].concat(@assets).sort
   end
 
   def render
     {
-      #:meta   => @entry.yaml,
       :user   => user,
       :assets => serialize_assets,
       :updated_at => Time.now

@@ -1,3 +1,5 @@
+<%= render :partial => 'asset' %>
+
 <%= form_for @entry, :html => { :multipart => true } do |f| %>
 
   <div class="row">
@@ -10,9 +12,18 @@
       <%= f.label :content %>
       <%= f.text_area :content %>
     </div>
-
-    <div class="images"></div>
-    <div class="files"></div>
+    <div class="span5 assets">
+      <% @entry.assets.each do |asset| %>
+        <div class="asset">
+          <%= file_field_tag "entry[assets][#{asset.id}][file]" %>
+          <br />
+          <%= check_box_tag "entry[assets][#{asset.id}][_destroy]" %> remove
+        </div>
+      <% end %>        
+    </div>
+    <div class="span5">
+      <%= link_to "Add Asset", "#", :class => "add-asset" %>
+    </div>
 
   </div>
   <div class="form-actions">
