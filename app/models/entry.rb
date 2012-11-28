@@ -5,8 +5,7 @@ class Entry
 
   attr_accessor :file_name, :content, :yaml_data, :images, :files, :assets
 
-  def initialize(options={})
-
+  def initialize(options = {})
     if options[:file_name]
       @file_name = options[:file_name]
       @path = File.join Wiki.repo_dir, "#{options[:file_name]}.markdown"
@@ -17,13 +16,7 @@ class Entry
     end
 
     @content   = options[:content] if options[:content] 
-    #@yaml_data = options[:yaml_data] if options[:yaml_data]
-    @assets    = deserialize_assets || []
-
-  end
-
-  def self.find_or_create_file(filename)
-    self.new :file_name => filename
+    @assets    = MetaData.deserialize_assets(self) || []
   end
 
   def self.all
@@ -31,13 +24,35 @@ class Entry
     Dir["*.markdown"].map{ |f| Entry.new :file_name => f.gsub(".markdown", "") }
   end
 
-  def updated_by
-    User.find @yaml_data[:user]["id"]
+  def self.find_or_create_file(filename)
+    self.new :file_name => filename
+  end
+
+  def destroy
+    File.delete(@path)
   end
 
   def updated_at
     @yaml_data[:updated_at]
   end
+
+  def updated_by
+    User.find @yaml_data[:user]["id"]
+  end
+
+  def save
+    if @content
+      File.open(@path, 'w'){|f| f.write append_data }
+    else
+      raise NothingToSaveError
+    end
+  end
+
+  def persisted?
+    false
+  end
+
+  private
 
   def find_or_create_file
     file = File.open @path, File::RDWR|File::CREAT
@@ -46,37 +61,15 @@ class Entry
     content
   end
 
+  def append_data
+    @content + YAML.dump(@yaml_data)
+  end
+
   def parse_file
     if @raw_content.match(/---/)
       @raw_content.match(/^(.+)---(.+)/m)
     else
       ["", @raw_content, ""]
-    end
-  end
-
-  def concatenate_content
-    @content + YAML.dump(@yaml_data)
-  end
-
-  def save
-    if @content
-      File.open(@path, 'w'){|f| f.write concatenate_content}
-    else
-      raise NothingToSaveError
-    end
-  end
-
-  def destroy
-    File.delete(@path)
-  end
-
-  def persisted?
-    false
-  end
-
-  def deserialize_assets
-    if @yaml_data
-      @yaml_data[:assets] ? AssetBuilder.find(@yaml_data[:assets]) : false
     end
   end
 

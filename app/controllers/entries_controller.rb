@@ -16,6 +16,7 @@ class EntriesController < ApplicationController
 
   def edit
     @entry = Entry.find_or_create_file params[:id]
+    @assets = @entry.assets.map{ |a| a.to_builder.target! }.join(",")
   end
 
   def create # and update

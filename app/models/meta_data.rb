@@ -6,22 +6,20 @@ class MetaData
     @assets = assets || []
   end
 
-  def user
-    @user.meta_data
+  def self.deserialize_assets(entry)
+    if entry.yaml_data
+      entry.yaml_data[:assets] ? AssetBuilder.find(entry.yaml_data[:assets]) : false
+    end
   end
 
-  def serialize_assets
-    @entry.yaml_data[:assets].delete_if{ |id| @assets.include? id } if @entry.yaml_data
-    @assets.select!{ |a| a.respond_to?("id") }
-    @assets.map!{ |a| a.id }
-
-    @entry.yaml_data ? @entry.yaml_data[:assets].concat(@assets).sort : @assets
+  def user
+    @user.meta_data
   end
 
   def render
     {
       :user   => user,
-      :assets => serialize_assets,
+      :assets => @assets,
       :updated_at => Time.now
     }
   end

@@ -7,7 +7,7 @@ class EntryBuilder
     @user   = options[:user]
 
     if options[:entry][:assets]
-      @assets = aggregate_assets options[:entry][:assets]
+      @assets = options[:entry][:assets]
     end
   end
 
@@ -16,10 +16,6 @@ class EntryBuilder
     @entry.yaml_data = @yaml_data.render
 
     @entry
-  end
-
-  def aggregate_assets params
-    AssetBuilder.new(params).assets
   end
 
 end

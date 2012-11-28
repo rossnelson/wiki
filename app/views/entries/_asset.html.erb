@@ -1,7 +1,27 @@
 <script id="asset-template" type="text/x-handlebars-template">
-  <div class="asset">
-    <%= file_field_tag "entry[assets][{{object_id}}][file]" %>
-    <br />
-    <%= check_box_tag "entry[assets][{{object_id}}][_destroy]" %> remove
+
+  <div class="asset alert alert-success">
+    {{#if image}}
+      <img src="{{url}}" width="50" />
+      <div class="url-insert btn" data-url="![{{file_identifier}}]({{url}})"> 
+        <i class="icon-share-alt"></i>
+        show url </div>
+    {{else}}
+      <div class="no-image">Not an Image</div>
+      <div class="url-insert btn" data-url="[{{file_identifier}}]({{url}})"> 
+        <i class="icon-share-alt"></i>
+        show url 
+      </div>
+    {{/if}}
+
+    <div class="remove btn">
+      <i class="icon-remove-sign"></i>
+      remove
+    </div>
+    <div class="file-name">
+      {{file_identifier}}
+    </div>
+    <%= hidden_field_tag "entry[assets][]", "{{id}}" %>
   </div>
+
 </script>

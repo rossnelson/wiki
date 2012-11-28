@@ -9,6 +9,7 @@ gem 'rmagick'
 gem 'redcarpet'
 gem "haml-rails"
 gem "capistrano"
+gem "jbuilder"
 
 gem 'sass-rails',   '~> 3.2.3'
 gem 'coffee-rails', '~> 3.2.1'

@@ -6,25 +6,29 @@ aggregateList = (val)->
     text = $(entry).find('a').text().toLocaleLowerCase()
 
     if text.search(val) > -1
-      console.log text
       $(entry).show()
     else
       $(entry).hide()
 
   )
 
-appendAsset = ()->
-  source = $("#asset-template").html()
-  context = {"object_id" : new Date().getTime()}
-  template = Handlebars.compile(source)
-
-  $('.assets').append template(context)
-
 $(document).ready ()->
+  Wiki.init()
+
   $("#entry_search").bind('keyup', (e)->
     aggregateList($(e.target).val())
   )
 
-  $('.add-asset').bind 'click', (e)->
-      appendAsset()
-      false
+  uploader = new qq.FineUploaderBasic(
+    button: $("#uploader")[0]
+    request:
+      endpoint: "/asseters.json"
+      params:
+        authenticity_token: $('meta[name="csrf-token"]').attr('content')
+    callbacks:
+      onComplete: (id, fileName, responseJSON)-> 
+        asset = new Wiki.Asset(responseJSON)
+        view = new Wiki.AssetShow(model: asset)
+        view.render()
+  )
+

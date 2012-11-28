@@ -8,12 +8,13 @@ class AssetBuilder
   end
 
   def self.find(ids=[])
+    ids.select!{ |i| Asset.exists? i }
     ids.map{ |i| Asset.find i }
   end
 
   def process
     @data.map do |asset|
-      asset[1]["_destroy"] ? destroy(asset) : build(asset)
+      build(asset)
     end
   end
 
