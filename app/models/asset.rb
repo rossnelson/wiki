@@ -12,7 +12,7 @@ class Asset < ActiveRecord::Base
     extname = File.extname(file_identifier)[1..-1]
     mime_type = Mime::Type.lookup_by_extension(extname)
     content_type = mime_type.to_s unless mime_type.nil?
-    content_type.split('/')
+    coontent_type ? content_type.split('/') : "file"
   end
 
   def url

@@ -37,7 +37,8 @@ class Entry
   end
 
   def updated_by
-    User.find @yaml_data[:user]["id"]
+    id = @yaml_data[:user]["id"]
+    User.exists?(id) ? User.find(id) : User.new
   end
 
   def save
