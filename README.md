@@ -8,7 +8,7 @@ This is a filesystem based wiki implemented within a rails project utilizing the
 - HAML
 - RedCarpet
 - FineUploader
-- 
+
 ## Help
 
 Upon encountering this error:  
