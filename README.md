@@ -7,7 +7,8 @@ This is a filesystem based wiki implemented within a rails project utilizing the
 - Carrierwave
 - HAML
 - RedCarpet
-- FineUploader
+- FineUploader.js
+- Backbone.js
 
 ## Help
 
